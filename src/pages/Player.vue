@@ -34,6 +34,7 @@
     export default {
         components: { PlayerProgress, PlayerNavbar },
         setup() {
+            let interval = null
             const loadTrack = () => {
                 loadPlayerState()
             }
@@ -54,6 +55,8 @@
             
             const axisMove = (direction) => {
                 if (direction === 'bottom') {
+                    console.info('Stop spotify box return to login')
+                    clearInterval(interval)
                     token.value = null
                     this.$router.push('/')
                 }
@@ -64,7 +67,7 @@
                 .addAxisListeners(axisMove)
                 .handleJoypadEvent()
 
-            setInterval(() => { loadTrack() }, 1000)
+            interval = setInterval(() => { loadTrack() }, 1000)
 
             loadTrack()
 
