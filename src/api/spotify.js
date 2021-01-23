@@ -16,8 +16,9 @@ class Spotify {
     getLoginUrl() {
         const endpoint = "https://accounts.spotify.com/authorize"
         const id = import.meta.env.VITE_SPOTIFY_CLIENT_ID
+        const host = window.location.hostname
 
-        const url = `${endpoint}?client_id=${id}&redirect_uri=http:%2F%2Flocalhost:3000%2Fcallback&scope=user-read-private%20user-read-playback-state%20user-read-email%20streaming%20user-read-currently-playing&response_type=token&state=123`
+        const url = `${endpoint}?client_id=${id}&redirect_uri=http:%2F%2F${host}:3000%2Fcallback&scope=user-read-private%20user-read-playback-state%20user-read-email%20streaming%20user-read-currently-playing&response_type=token&state=123`
 
         return url
     }
