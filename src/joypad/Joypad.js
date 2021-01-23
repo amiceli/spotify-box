@@ -29,11 +29,11 @@ class Joypad {
 
     fromMapping (buttonName) {
         const map = {
-            button_0 : 'play',
-            button_1 : 'previous',
-            button_2 : 'next',
-            button_3 : 'shuffle',
-            button_4 : 'repeat'
+            button_9 : 'play',
+            button_7 : 'previous',
+            button_11 : 'next',
+            button_8 : 'shuffle',
+            button_10 : 'repeat'
         }
 
         return map[buttonName]
@@ -44,6 +44,8 @@ class Joypad {
 
         joypad.on('button_press', (e) => {
             const { buttonName } = e.detail
+
+            console.info('🚀  buttonName', buttonName)
 
             this.buttonListeners.forEach((cb) => {
                 return cb(this.fromMapping(buttonName))
