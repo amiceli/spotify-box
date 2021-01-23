@@ -2,6 +2,7 @@
 
 spotify-box is a arcade like raspberry pi controler make with VueJS 3, Vite and joypad.js GamepadApi wrapper.
 
+![spotify-box](https://raw.githubusercontent.com/amiceli/spotify-box/master/images/spotify-box.jpeg | width=100)
 **This project need a Spotify Application** with /callback redirect url.
 
 ## Take a look
