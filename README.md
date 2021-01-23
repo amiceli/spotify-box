@@ -39,6 +39,32 @@ Same for `env.example` and change `VITE_SPOTIFY_CLIENT_ID`.
 
     npm run build
 
+## Production
+
+Currently 3000 port is hard coded so I give you my nginx config :
+
+~~~nginx
+server {
+
+    listen          3000;
+    listen          [::]:3000;
+    server_name     _;
+    root            /home/pi/www/spotify-box/dist/;
+    index  		    index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+}
+~~~
+
 ## Bonus
 
-Currently I use [raspotify](https://dtcooper.github.io/raspotify/) to play son fromm my raspberry as avalaible device.
+Currently I use [raspotify](https://dtcooper.github.io/raspotify/) to play song from my raspberry as avalaible device.
