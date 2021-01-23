@@ -1,4 +1,5 @@
 import 'joypad.js'; 
+import { mapping } from '../mapping'
 
 class Joypad {
     
@@ -27,18 +28,6 @@ class Joypad {
         return this
     }
 
-    fromMapping (buttonName) {
-        const map = {
-            button_9 : 'play',
-            button_7 : 'previous',
-            button_11 : 'next',
-            button_8 : 'shuffle',
-            button_10 : 'repeat'
-        }
-
-        return map[buttonName]
-    }
-
     handleJoypadEvent () {
         joypad.set({ axisMovementThreshold: 0.8, })
 
@@ -48,7 +37,7 @@ class Joypad {
             console.info('🚀  buttonName', buttonName)
 
             this.buttonListeners.forEach((cb) => {
-                return cb(this.fromMapping(buttonName))
+                return cb(mapping[buttonName])
             })
         })
 

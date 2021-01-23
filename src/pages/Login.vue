@@ -19,10 +19,21 @@
 
 <script>
     import Spotify from '../api/spotify'
+    import Joypad from '../joypad/Joypad'
 
     export default {
         setup() {
             const login = () => window.location = Spotify.fromToken(null).getLoginUrl()
+            
+            const axisMove = (direction) => {
+                if (direction === 'top') {
+                    this.$el.querySelector('button').click()
+                }
+            }
+
+            Joypad.getOne()
+                .addAxisListeners(axisMove)
+                .handleJoypadEvent()
 
             return { login }
         }

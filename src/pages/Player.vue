@@ -1,50 +1,10 @@
 <template>
     <div class="sb-player">
-        <nav class="navbar">
-            <div class="navbar-content">
-                <img
-                    src="https://www.freepnglogos.com/uploads/spotify-logo-png/file-spotify-logo-png-4.png"
-                    alt="spotify logo"
-                >
-            </div>
-            <div
-                class="navbar-content d-md-none ml-auto"
-                v-if="player.trackName !== null"
-            >
-                <i
-                    v-if="player.is_shuffling"
-                    class="bi bi-shuffle text-success"
-                ></i>
-                <i
-                    v-if="player.repeat"
-                    class="bi bi-arrow-repeat text-success"
-                ></i>
-                <div
-                    v-if="player.repeatTrack"
-                    class="sb-player__repeat-track"
-                >
-                    <i class="bi bi-arrow-repeat text-success"></i>
-                    <span class="badge badge-success badge-pill">
-                        1
-                    </span>
-                </div>
-                <span
-                    v-if="player.is_playing"
-                    class="badge badge-success badge-pill"
-                >PLAYING</span>
-                <span
-                    v-else
-                    class="badge badge-primary badge-pill"
-                >PAUSE</span>
-            </div>
-        </nav>
+        <PlayerNavbar />
         <div
             class="content"
             v-if="player.trackName !== null"
         >
-            <h2 class="content-title">
-                {{ player.trackName }} / <i class="text-muted">{{ getArtists(player.trackArtists) }} </i>
-            </h2>
             <PlayerProgress :player="player" />
         </div>
         <div
@@ -57,11 +17,11 @@
 </template>
 
 <script>
-    import token from '../state/token'
     import PlayerProgress from '../components/PlayerProgress.vue'
-    import { 
-        player, 
-        loadPlayerState, 
+    import PlayerNavbar from '../components/PlayerNavbar.vue'
+    import {
+        player,
+        loadPlayerState,
         playNextSong,
         playPreviousSong,
         play,
@@ -69,16 +29,15 @@
         changeRepeatMode
     } from '../state/player'
     import Joypad from '../joypad/Joypad'
+    import token from '../state/token'
 
     export default {
-        components: { PlayerProgress },
+        components: { PlayerProgress, PlayerNavbar },
         setup() {
             const loadTrack = () => {
                 loadPlayerState()
             }
-            const getArtists = (artists) => {
-                return artists.length > 1 ? artists.join(', ') : artists[0]
-            }
+
             const buttonPress = (buttonName) => {
                 if (buttonName === 'play') {
                     play()
@@ -92,11 +51,11 @@
                     changeRepeatMode()
                 }
             }
+            
             const axisMove = (direction) => {
-                if (direction === 'top') {
-
-                } else {
-
+                if (direction === 'bottom') {
+                    token.value = null
+                    this.$router.push('/')
                 }
             }
 
@@ -109,44 +68,17 @@
 
             loadTrack()
 
-            return { player, getArtists }
+            return { player }
         }
     }
 </script>
 
 <style lang="css" scoped>
-    .sb-player img {
-        width: 30px;
-        margin-left: 5px;
-        vertical-align: middle;
+    .sb-player {
+        height: 100%;
     }
-
-    .sb-player .bi {
-        margin-right: 7px;
-        position: relative;
-        top: -1px;
-        font-size: 20px;
-    }
-
-    .sb-player .bi.is--inactive {
-        color: red;
-    }
-
-    .sb-player__repeat-track {
-        position: relative;
-    }
-
-    .sb-player__repeat-track span {
-        position: absolute;
-        right: 8px;
-        top: 5px;
-        /* color : white !important; */
-        height: 10px;
-        width: 10px;
-        padding: 0;
-        font-size: 6px;
-        text-align: center;
-        border: 1px black solid !important;
-        border-radius: 10px;
+    .sb-player .content {
+        height: calc(100% - 50px);
+        margin: 0;
     }
 </style>

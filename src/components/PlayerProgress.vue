@@ -1,18 +1,13 @@
 <template>
-    <div class="progress-group">
-        <div class="progress">
-            <div
-                class="progress-bar progress-bar-animated bg-success"
-                role="progressbar"
-                :style="{width: `${getPercent()}%`}"
-                :aria-valuenow="getPercent()"
-                aria-valuemin="0"
-                aria-valuemax="100"
-            ></div>
+    <div class="sb-player-progress">
+        <div>
+            <h2 class="content-title">
+                {{ player.trackName }} / <i class="text-muted">{{ getArtists(player.trackArtists) }} </i>
+            </h2>
+            <h1 class="h1 text-center">
+                {{ millisToMinutesAndSeconds(player.duration_ms - player.progression_ms) }}
+            </h1>
         </div>
-        <span class="progress-group-label">
-            {{ millisToMinutesAndSeconds(player.duration_ms - player.progression_ms) }}
-        </span>
     </div>
 </template>
 
@@ -21,16 +16,29 @@
 
     export default {
         props: ['player'],
-        setup (props) {
-
-            const getPercent = () => {
-                return (100 * props.player.progression_ms) / props.player.duration_ms
+        setup(props) {
+            const getArtists = (artists) => {
+                return artists.length > 1 ? artists.join(', ') : artists[0]
             }
 
-            return { millisToMinutesAndSeconds, getPercent }
+            return { millisToMinutesAndSeconds, getArtists }
         }
     }
 </script>
 
-<style>
+<style lang="css" scoped>
+    .sb-player-progress {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .sb-player-progress h1 {
+        font-size: 100px;
+    }
+
+    .sb-player-progress div {
+        display: inline-block;
+    }
 </style>

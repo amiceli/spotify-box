@@ -7,7 +7,6 @@
 
 <script>
     import token from '../state/token'
-    import Spotify from 'spotify-web-api-js'
     import Login from './Login.vue'
     import Player from './Player.vue'
 
