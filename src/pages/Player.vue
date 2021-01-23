@@ -52,13 +52,15 @@
                     changeRepeatMode()
                 }
             }
-            
+
             const axisMove = (direction) => {
                 if (direction === 'bottom') {
                     console.info('Stop spotify box return to login')
                     clearInterval(interval)
+                    if (player.is_playing) {
+                        play()
+                    }
                     token.value = null
-                    this.$router.push('/')
                 }
             }
 
